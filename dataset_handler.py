@@ -10,6 +10,8 @@ class DatasetHandler:
         assert isinstance(filename, str)
         assert len(filename) > 0
 
+        self._plot = False # controls whether plots should be displayed. Useful for debugging
+
         try:
             self._df = pd.read_csv(filename)
         except FileNotFoundError:
@@ -31,10 +33,8 @@ class DatasetHandler:
         # We can rename the electric vehicle types for simplicity, i.e Plug-in Hybrid Electric Vehicle (PHEV) to PHEV
 
     def create_boxplot(self, data={}):
-        """_summary_
-
-        :param data: _description_, defaults to {}
-        :type data: dict, optional
+        """
+        Creates a boxplot
         """
         fig = plt.figure()
         ax  = fig.add_subplot(111)
@@ -44,22 +44,32 @@ class DatasetHandler:
         # ax.set_xticklabels(years)
         plt.title(data['title'])
         plt.tight_layout()
+        if self._plot: plt.show()
 
-    def create_histogram(self, data={}):
-        """_summary_
-
-        :param data: _description_, defaults to {}
-        :type data: dict, optional
+    def create_barplot(self, data={}):
         """
-        pass
+        Creates a barplot
+        """
+        fig = plt.figure()
+        ax  = fig.add_subplot(111)
+        plt.bar(data['x'], data['y'])
+        plt.xlabel(data["xlabel"])
+        plt.ylabel(data["ylabel"])
+        plt.xticks(rotation=90)
+        plt.title(data['title'])
+        plt.tight_layout()
+        if self._plot: plt.show()
 
     def create_piechart(self, data={}):
-        """_summary_
-
-        :param data: _description_, defaults to {}
-        :type data: dict, optional
         """
-        pass
+        Creates a piechart
+        """
+        fig = plt.figure()
+        ax  = fig.add_subplot(111)
+        plt.pie(data['x'], labels=data['y'])
+        plt.title(data['title'])
+        plt.tight_layout()
+        if self._plot: plt.show()
 
     def create_map(self, data={}):
         """_summary_

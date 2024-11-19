@@ -1,7 +1,8 @@
 from dataset_handler import DatasetHandler
 
-handler = DatasetHandler('Electric_Vehicle_Population_Data.csv')
+handler = DatasetHandler(r"C:\Users\denve\ece143proj\Electric_Vehicle_Population_Data.csv")
 handler.clean_dataset()
+handler._plot = False
 
 years=sorted(handler._df['Model Year'].unique())
 yearly=[]
@@ -17,58 +18,33 @@ boxplot_data = {
 }
 handler.create_boxplot(boxplot_data)
 
-# years=sorted(set(data['Model Year']))
-# yearly=[]
-# for year in years:
-#     byyear=data.loc[data['Model Year'] == year].values
-#     yearly.append([x[10] for x in byyear])
-# fig = plt.figure()
-# ax  = fig.add_subplot(111)
-# plt.boxplot(yearly)
-# plt.xlabel('Model Year')
-# plt.ylabel('Electric Range')
-# ax.set_xticklabels(years)
-# plt.title(f'Electric Range by Model Year')
-# plt.tight_layout()
-# # plt.show()
+handler._plot = False
+# displays the makes and the number of cars in each section
+maker_data = {
+    'xlabel': 'Make',
+    'ylabel': 'No. of Vehicles',
+    'title' : 'Top 10 Different Makers',
+    'x': handler._df['Make'].value_counts().head(10).index.to_list(),
+    'y': handler._df['Make'].value_counts().head(10).to_list()
+}
+handler.create_barplot(maker_data)
 
-# makes=sorted(set(data['Make']))
-# PHEV=[]
-# BEV=[]
-# for make in makes:
-#     bymake=data.loc[data['Make'] == make].values
-#     PHEV.append([x[10] for x in bymake if x[8]=="Plug-in Hybrid Electric Vehicle (PHEV)"])
-#     BEV.append([x[10] for x in bymake if x[8]=="Battery Electric Vehicle (BEV)"])
+# displays the Model and the number of cars in each section
+model_data = {
+    'xlabel': 'Make',
+    'ylabel': 'No. of Vehicles',
+    'title' : 'Top 10 Different Models',
+    'x': handler._df['Model'].value_counts().head(10).index.to_list(),
+    'y': handler._df['Model'].value_counts().head(10).to_list()
+}
+handler.create_barplot(model_data)
 
-# fig = plt.figure()
-# ax  = fig.add_subplot(111)
-# plt.boxplot(PHEV)
-# plt.xlabel('Make')
-# plt.ylabel('Electric Range')
-# ax.set_xticklabels(makes)
-# plt.xticks(rotation=90)
-# plt.tight_layout()
-# plt.title(f'Electric Range by Car Make for PHEV')
-# # plt.show()
-# fig = plt.figure()
-# ax  = fig.add_subplot(111)
-# plt.boxplot(BEV)
-# plt.xlabel('Make')
-# plt.ylabel('Electric Range')
-# ax.set_xticklabels(makes)
-# plt.xticks(rotation=90)
-# plt.tight_layout()
-# plt.title(f'Electric Range by Car Make for BEV')
-# # plt.show()
+car_type = {
+    'title' : 'Vehicle type distribution',
+    'y': handler._df['Electric Vehicle Type'].value_counts().head(10).index.to_list(),
+    'x': handler._df['Electric Vehicle Type'].value_counts().head(10).to_list()
+}
+handler._plot = True
+handler.create_piechart(car_type)
 
-# fig = plt.figure()
-# plt.pie([len(sum(BEV, [])),len(sum(PHEV, []))],labels=["BEV", "PHEV"],autopct='%1.1f%%')
-# # plt.show()
-
-
-# clean=data.loc[data['Clean Alternative Fuel Vehicle (CAFV) Eligibility'] == "Clean Alternative Fuel Vehicle Eligible"].values
-# notclean=data.loc[data['Clean Alternative Fuel Vehicle (CAFV) Eligibility'] == "Not eligible due to low battery range"].values
-# unknown=data.loc[data['Clean Alternative Fuel Vehicle (CAFV) Eligibility'] == "Eligibility unknown as battery range has not been researched"].values
-# fig = plt.figure()
-# plt.pie([len(clean),len(notclean),len(unknown)],labels=["Eligiable", "Not Eligible", "Unknown"],autopct='%1.1f%%')
-# plt.show()
+# print(handler._df['Electric Vehicle Type'].value_counts().head(10).to_list())
