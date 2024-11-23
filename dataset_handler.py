@@ -36,27 +36,34 @@ class DatasetHandler:
         """
         Creates a boxplot
         """
+        assert isinstance(data, dict)
+        assert len(data) > 0
+        # assert "data" in data
         fig = plt.figure()
         ax  = fig.add_subplot(111)
-        plt.boxplot(data["data"])
+        plt.boxplot(data["data"], labels=data["y"])
         plt.xlabel(data["xlabel"])
         plt.ylabel(data["ylabel"])
-        # ax.set_xticklabels(years)
         plt.title(data['title'])
+        plt.xticks(rotation=90)
         plt.tight_layout()
         if self._plot: plt.show()
 
-    def create_barplot(self, data={}):
+    def create_barplot(self, data={}, rotate=True):
         """
         Creates a barplot
         """
+        assert isinstance(data, dict)
+        assert len(data) > 0
+        assert "x" in data
+        assert "y" in data
         fig = plt.figure()
         ax  = fig.add_subplot(111)
         plt.bar(data['x'], data['y'])
-        plt.xlabel(data["xlabel"])
-        plt.ylabel(data["ylabel"])
-        plt.xticks(rotation=90)
-        plt.title(data['title'])
+        plt.xlabel(data.get("xlabel", "X axis"))
+        plt.ylabel(data.get("ylabel", "Y axis"))
+        plt.title(data.get("title", "Plot"))
+        if rotate: plt.xticks(rotation=90)
         plt.tight_layout()
         if self._plot: plt.show()
 
@@ -64,17 +71,19 @@ class DatasetHandler:
         """
         Creates a piechart
         """
+        assert isinstance(data, dict)
+        assert len(data) > 0
+        assert "x" in data
+        assert "y" in data
         fig = plt.figure()
         ax  = fig.add_subplot(111)
         plt.pie(data['x'], labels=data['y'])
-        plt.title(data['title'])
+        plt.title(data.get("title", "Plot"))
         plt.tight_layout()
         if self._plot: plt.show()
 
     def create_map(self, data={}):
-        """_summary_
-
-        :param data: _description_, defaults to {}
-        :type data: dict, optional
+        """
+        Creates a map of car locations in the world
         """
         pass

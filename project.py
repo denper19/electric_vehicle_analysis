@@ -14,7 +14,8 @@ boxplot_data = {
     'xlabel': 'Model Year',
     'ylabel': 'Electric Range',
     'title' : 'Electric Range by Model Year',
-    'data': yearly
+    'data': yearly,
+    'y': years
 }
 handler.create_boxplot(boxplot_data)
 
