@@ -9,7 +9,7 @@ yearly=[]
 for year in years:
     byyear=handler._df.loc[handler._df['Model Year'] == year].values
     yearly.append([x[10] for x in byyear])
-    
+
 boxplot_data = {
     'xlabel': 'Model Year',
     'ylabel': 'Electric Range',
@@ -46,5 +46,3 @@ car_type = {
 }
 handler._plot = True
 handler.create_piechart(car_type)
-
-# print(handler._df['Electric Vehicle Type'].value_counts().head(10).to_list())
