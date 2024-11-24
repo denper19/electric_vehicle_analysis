@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+# import folium
 
 class DatasetHandler:
 
@@ -31,25 +32,49 @@ class DatasetHandler:
         # Secondly, Legislative District is of dtype object, when it should be float so we can change it
 
         # We can rename the electric vehicle types for simplicity, i.e Plug-in Hybrid Electric Vehicle (PHEV) to PHEV
+        ev_type = []
+        for elem in self._df['Electric Vehicle Type']:
+            if 'PHEV' in elem:
+                ev_type.append('PHEV')
+            elif 'BEV' in elem:
+                ev_type.append('BEV')
+            else:
+                raise ValueError("Value has to be either PHEV or BEV!")
+        self._df['Electric Vehicle Type'] = ev_type
 
-    def create_boxplot(self, data={}):
+        # We can do something similar for CAFV
+        eligible = []
+        for elem in self._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility']:
+            if 'Not eligible due to low battery range' == elem:
+                eligible.append('Not Eligible')
+            elif 'Eligibility unknown as battery range has not been researched' == elem:
+                eligible.append('Unkown')
+            elif 'Clean Alternative Fuel Vehicle Eligible' == elem:
+                eligible.append('Eligible')
+        self._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'] = eligible
+
+        # print(self._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'])
+
+    def create_boxplot(self, data={}, **other):
         """
         Creates a boxplot
         """
         assert isinstance(data, dict)
         assert len(data) > 0
+        assert "x" in data
+        assert "y" in data
         # assert "data" in data
-        fig = plt.figure()
+        fig, ax = plt.subplots()
         ax  = fig.add_subplot(111)
-        plt.boxplot(data["data"], labels=data["y"])
-        plt.xlabel(data["xlabel"])
-        plt.ylabel(data["ylabel"])
-        plt.title(data['title'])
-        plt.xticks(rotation=90)
-        plt.tight_layout()
+        ax.boxplot(data["x"], labels=data["y"], **other)
+        ax.set_xlabel(data["xlabel"])
+        ax.set_ylabel(data["ylabel"])
+        ax.set_title(data['title'])
+        ax.tick_params(axis='x', rotation=90)
+        # ax.tight_layout()
         if self._plot: plt.show()
 
-    def create_barplot(self, data={}, rotate=True):
+    def create_barplot(self, data={}, rotate=True, **other):
         """
         Creates a barplot
         """
@@ -57,17 +82,15 @@ class DatasetHandler:
         assert len(data) > 0
         assert "x" in data
         assert "y" in data
-        fig = plt.figure()
-        ax  = fig.add_subplot(111)
-        plt.bar(data['x'], data['y'])
-        plt.xlabel(data.get("xlabel", "X axis"))
-        plt.ylabel(data.get("ylabel", "Y axis"))
-        plt.title(data.get("title", "Plot"))
-        if rotate: plt.xticks(rotation=90)
-        plt.tight_layout()
+        fig, ax  = plt.subplots()
+        ax.bar(data['x'], data['y'], **other)
+        ax.set_xlabel(data.get("xlabel", "X axis"))
+        ax.set_ylabel(data.get("ylabel", "Y axis"))
+        ax.set_title(data.get("title", "Plot"))
+        if rotate: ax.tick_params(axis='x', rotation=90)
         if self._plot: plt.show()
 
-    def create_piechart(self, data={}):
+    def create_piechart(self, data={}, **other):
         """
         Creates a piechart
         """
@@ -75,14 +98,12 @@ class DatasetHandler:
         assert len(data) > 0
         assert "x" in data
         assert "y" in data
-        fig = plt.figure()
-        ax  = fig.add_subplot(111)
-        plt.pie(data['x'], labels=data['y'])
-        plt.title(data.get("title", "Plot"))
-        plt.tight_layout()
+        fig, ax = plt.subplots()
+        ax.pie(data['x'], labels=data['y'], autopct='%1.1f%%', **other)
+        ax.set_title(data.get("title", "Plot"))
         if self._plot: plt.show()
 
-    def create_map(self, data={}):
+    def create_map(self, data={}, **other):
         """
         Creates a map of car locations in the world
         """
