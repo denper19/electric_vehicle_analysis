@@ -1,13 +1,12 @@
 from dataset_handler import DatasetHandler
 import matplotlib.pyplot as plt
-from dataset_handler import DatasetHandler
 from geopy.geocoders import Nominatim
 import folium
 from folium import Marker
 from folium.plugins import MarkerCluster
 import json
 
-handler = DatasetHandler(r"C:\Users\denve\ece143proj\Electric_Vehicle_Population_Data.csv")
+handler = DatasetHandler("proj/electric_vehicle_analysis/Electric_Vehicle_Population_Data.csv")
 handler.clean_dataset()
 handler._plot = False
 
@@ -24,27 +23,25 @@ boxplot_data = {
     'x': yearly,
     'y': years
 }
-
-handler.create_boxplot(data=boxplot_data)
-
-for e, battery_type in enumerate(['PHEV', 'BEV'], start=1):
-
-    # Filter the DataFrame for the current battery_type
-    filtered_data = handler._df[handler._df['Electric Vehicle Type'] == battery_type]
-
-    # Get unique makes and prepare data for box plot
-    makes = sorted(filtered_data['Make'].unique())
-    electric_ranges = [filtered_data[filtered_data['Make'] == make]['Electric Range'] for make in makes]
-
-    # Create the box plot
-    ev_data = {
-        'xlabel': 'Make',
-        'ylabel': 'Electric Range',
-        'title' : f'Electric Range by Model Year for {battery_type}',
-        'x': electric_ranges,
-        'y': makes
-    }
-    handler.create_boxplot(data=ev_data, patch_artist=True)
+PHEV=handler._df[handler._df['Electric Vehicle Type']=='PHEV']
+boxplot_data_PHEV = {
+    'xlabel': 'Make',
+    'ylabel': 'Electric Range',
+    'title' : 'Electric Range by Manufacturer for PHEV',
+    'x': [PHEV[PHEV['Make'] == make]['Electric Range'] for make in PHEV['Make'].unique()],
+    'y': PHEV['Make'].unique()
+}
+BEV=handler._df[handler._df['Electric Vehicle Type']=='BEV']
+boxplot_data_BEV = {
+    'xlabel': 'Make',
+    'ylabel': 'Electric Range',
+    'title' : 'EElectric Range by Manufacturer for BEV',
+    'x': [BEV[BEV['Make'] == make]['Electric Range'] for make in BEV['Make'].unique()],
+    'y': BEV['Make'].unique()
+}
+handler.create_boxplot(data=boxplot_data, patch_artist=True)
+handler.create_boxplot(data=boxplot_data_PHEV, patch_artist=True)
+handler.create_boxplot(data=boxplot_data_BEV, patch_artist=True)
 
 handler._plot = True
 # displays the makes and the number of cars in each section
@@ -83,6 +80,15 @@ eligibility = {
 handler._plot = True
 handler.create_piechart(eligibility)
 
+print("Geographical:")
+print("*",len(handler._df['County'].unique()),'counties')
+print("*",len(handler._df['City'].unique()),'cities')
+print("*",len(handler._df['Electric Utility'].unique()),'electric utilities')
+print("\nMakes and Models:")
+print("*",len(handler._df['Make'].unique()),'makes')
+print("*",len(handler._df['Model'].unique()),'models')
+
+handler._df.describe(exclude='number').T
 #### THIS CODE IS TO READ DATA INTO A JSON FILE, DO NOT COMMENT OUT UNLESS NEED TO CREATE JSON FILE #############
 
 # locations = []
