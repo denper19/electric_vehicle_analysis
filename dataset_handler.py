@@ -65,7 +65,7 @@ class DatasetHandler:
         assert "y" in data
 
         fig, ax = plt.subplots()
-        ax  = fig.add_subplot(111)
+        # ax  = fig.add_subplot(111)
         
         ax.set_xlabel(data.get('xlabel', 'X'))
         ax.set_ylabel(data.get('ylabel', 'Y'))
@@ -103,6 +103,8 @@ class DatasetHandler:
         """
         ax = self.create_graph(data)
 
+        ax.set_xlabel('')
+        ax.set_ylabel('')
         ax.pie(data['x'], labels=data['y'], autopct='%1.1f%%', **other)
         
         if self._plot: plt.show()
