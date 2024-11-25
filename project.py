@@ -1,5 +1,11 @@
 from dataset_handler import DatasetHandler
 import matplotlib.pyplot as plt
+from dataset_handler import DatasetHandler
+from geopy.geocoders import Nominatim
+import folium
+from folium import Marker
+from folium.plugins import MarkerCluster
+import json
 
 handler = DatasetHandler(r"C:\Users\denve\ece143proj\Electric_Vehicle_Population_Data.csv")
 handler.clean_dataset()
@@ -77,33 +83,47 @@ eligibility = {
 handler._plot = True
 handler.create_piechart(eligibility)
 
-from dataset_handler import DatasetHandler
+#### THIS CODE IS TO READ DATA INTO A JSON FILE, DO NOT COMMENT OUT UNLESS NEED TO CREATE JSON FILE #############
 
-handler = DatasetHandler("Electric_Vehicle_Population_Data.csv")
-handler.clean_dataset()
-# handler._df['Postal Code']
+# locations = []
+# count = 0
+# zipcode_location_data = {}
 
-from geopy.geocoders import Nominatim
+# # Assuming 'handler._df' has 'Postal Code' column with zip codes
+# for zipcode in handler._df['Postal Code'].dropna().unique():
+#     geolocator = Nominatim(user_agent="myGeocodingApp")
+#     location = geolocator.geocode(int(zipcode))
+    
+#     if location:
+#         # Store the latitude and longitude as a tuple in the dictionary
+#         zipcode_location_data[int(zipcode)] = {'latitude': location.latitude, 'longitude': location.longitude}
+    
+#     count += 1
+#     print(count)
 
-locations = []
-count = 0
-for zipcode in handler._df['Postal Code'].dropna().unique()[:10]:
-    geolocator = Nominatim(user_agent="myGeocodingApp")
-    location = geolocator.geocode(int(zipcode))
-    locations.append([location.latitude, location.longitude])
-    # print(count, int(zipcode), location.latitude, location.longitude)
-    count += 1
+# # Write the data to a JSON file
+# with open("locations_data.json", "w") as file:
+#     json.dump(zipcode_location_data, file)
 
-import folium
-from folium import Marker
-from folium.plugins import MarkerCluster
+######################################################################################################################
 
-map_usa = folium.Map(location=[39.5, -99.7], tiles='cartodbpositron', zoom_start=4.4)
 
-# # Add points to the map
-mc = MarkerCluster()
-for loc in locations:
-    mc.add_child(Marker(loc))
-map_usa.add_child(mc)
+#### THIS CODE ONLY RUNS IN JUPYTER NOTEBOOK, DO NOT COMMENT OUT######
 
-map_usa
+# with open("locations_data.json", "r") as file:
+#     loaded_data = json.load(file)
+# # print(loaded_data)
+# map_usa = folium.Map(location=[39.5, -99.7], tiles='cartodbpositron', zoom_start=4.4)
+
+# # # # Add points to the map
+# mc = MarkerCluster()
+# for loc in handler._df['Postal Code'].dropna():
+#     key = str(int(loc))
+#     lat, lon = loaded_data[key]['latitude'], loaded_data[key]['longitude']
+#     mc.add_child(Marker([lat, lon]))
+# map_usa.add_child(mc)
+
+# map_usa
+
+##########################################################################
+
