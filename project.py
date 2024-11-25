@@ -6,7 +6,7 @@ from folium import Marker
 from folium.plugins import MarkerCluster
 import json
 
-handler = DatasetHandler(r"C:\Users\denve\ece143proj\Electric_Vehicle_Population_Data.csv")
+handler = DatasetHandler("proj/electric_vehicle_analysis/Electric_Vehicle_Population_Data.csv")
 handler.clean_dataset()
 handler._plot = False
 
