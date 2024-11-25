@@ -23,7 +23,7 @@ class DatasetHandler:
         Cleans the dataset i.e removes NaNs, errors, etc... and makes the dataset simpler to use.
         """
         # if we run the following, we see that Legislative District has the most number of NaN values
-        self._df.isna().sum().to_frame('NaN')
+        print(self._df.isna().sum().to_frame('NaN'))
         # we can fix this as follows:
         self._df['Legislative District'] = self._df['Legislative District'].map(lambda x: str(x).split('.')[0])
         # in a similar way for Vehicle Location
@@ -52,7 +52,7 @@ class DatasetHandler:
             elif 'Clean Alternative Fuel Vehicle Eligible' == elem:
                 eligible.append('Eligible')
         self._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'] = eligible
-
+        self._df= self._df.ffill()#ffill any unfixed nan
         # print(self._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'])
 
     def create_graph(self, data={}):
@@ -65,12 +65,11 @@ class DatasetHandler:
         assert "y" in data
 
         fig, ax = plt.subplots()
-        # ax  = fig.add_subplot(111)
         
         ax.set_xlabel(data.get('xlabel', 'X'))
         ax.set_ylabel(data.get('ylabel', 'Y'))
         ax.set_title(data.get('title', 'Title'))
-        # ax.tick_params(axis='x', rotation=90)
+
         return ax
 
     def create_boxplot(self, data={}, **other):
@@ -78,9 +77,11 @@ class DatasetHandler:
         Creates a boxplot
         """
         ax = self.create_graph(data)
-
-        ax.boxplot(data["x"], labels=data["y"], **other)
-
+        cmap = plt.get_cmap('hsv')
+        bxplot=ax.boxplot(data["x"], labels=data["y"], **other)
+        colors = [cmap(x/len(bxplot['boxes']))for x in range(0,len(bxplot['boxes']))]
+        for patch, color in zip(bxplot['boxes'], colors):
+            patch.set_facecolor(color)
         ax.tick_params(axis='x', rotation=90)
         
         if self._plot: plt.show()
