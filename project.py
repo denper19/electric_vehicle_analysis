@@ -76,3 +76,34 @@ eligibility = {
 }
 handler._plot = True
 handler.create_piechart(eligibility)
+
+from dataset_handler import DatasetHandler
+
+handler = DatasetHandler("Electric_Vehicle_Population_Data.csv")
+handler.clean_dataset()
+# handler._df['Postal Code']
+
+from geopy.geocoders import Nominatim
+
+locations = []
+count = 0
+for zipcode in handler._df['Postal Code'].dropna().unique()[:10]:
+    geolocator = Nominatim(user_agent="myGeocodingApp")
+    location = geolocator.geocode(int(zipcode))
+    locations.append([location.latitude, location.longitude])
+    # print(count, int(zipcode), location.latitude, location.longitude)
+    count += 1
+
+import folium
+from folium import Marker
+from folium.plugins import MarkerCluster
+
+map_usa = folium.Map(location=[39.5, -99.7], tiles='cartodbpositron', zoom_start=4.4)
+
+# # Add points to the map
+mc = MarkerCluster()
+for loc in locations:
+    mc.add_child(Marker(loc))
+map_usa.add_child(mc)
+
+map_usa
