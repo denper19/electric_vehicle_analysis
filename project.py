@@ -19,7 +19,7 @@ boxplot_data = {
     'y': years
 }
 
-handler.create_boxplot(boxplot_data)
+handler.create_boxplot(data=boxplot_data)
 
 for e, battery_type in enumerate(['PHEV', 'BEV'], start=1):
 
@@ -38,7 +38,7 @@ for e, battery_type in enumerate(['PHEV', 'BEV'], start=1):
         'x': electric_ranges,
         'y': makes
     }
-    handler.create_boxplot(ev_data, patch_artist=True)
+    handler.create_boxplot(data=ev_data, patch_artist=True)
 
 handler._plot = True
 # displays the makes and the number of cars in each section

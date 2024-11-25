@@ -55,52 +55,56 @@ class DatasetHandler:
 
         # print(self._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'])
 
-    def create_boxplot(self, data={}, **other):
+    def create_graph(self, data={}):
         """
-        Creates a boxplot
+        Abstracts away the core funcitonality of the visualization code.
         """
         assert isinstance(data, dict)
         assert len(data) > 0
         assert "x" in data
         assert "y" in data
-        # assert "data" in data
+
         fig, ax = plt.subplots()
         ax  = fig.add_subplot(111)
+        
+        ax.set_xlabel(data.get('xlabel', 'X'))
+        ax.set_ylabel(data.get('ylabel', 'Y'))
+        ax.set_title(data.get('title', 'Title'))
+        # ax.tick_params(axis='x', rotation=90)
+        return ax
+
+    def create_boxplot(self, data={}, **other):
+        """
+        Creates a boxplot
+        """
+        ax = self.create_graph(data)
+
         ax.boxplot(data["x"], labels=data["y"], **other)
-        ax.set_xlabel(data["xlabel"])
-        ax.set_ylabel(data["ylabel"])
-        ax.set_title(data['title'])
+
         ax.tick_params(axis='x', rotation=90)
-        # ax.tight_layout()
+        
         if self._plot: plt.show()
 
     def create_barplot(self, data={}, rotate=True, **other):
         """
         Creates a barplot
         """
-        assert isinstance(data, dict)
-        assert len(data) > 0
-        assert "x" in data
-        assert "y" in data
-        fig, ax  = plt.subplots()
+        ax = self.create_graph(data)
+
         ax.bar(data['x'], data['y'], **other)
-        ax.set_xlabel(data.get("xlabel", "X axis"))
-        ax.set_ylabel(data.get("ylabel", "Y axis"))
-        ax.set_title(data.get("title", "Plot"))
+
         if rotate: ax.tick_params(axis='x', rotation=90)
+        
         if self._plot: plt.show()
 
     def create_piechart(self, data={}, **other):
         """
         Creates a piechart
         """
-        assert isinstance(data, dict)
-        assert len(data) > 0
-        assert "x" in data
-        assert "y" in data
-        fig, ax = plt.subplots()
+        ax = self.create_graph(data)
+
         ax.pie(data['x'], labels=data['y'], autopct='%1.1f%%', **other)
-        ax.set_title(data.get("title", "Plot"))
+        
         if self._plot: plt.show()
 
     def create_map(self, data={}, **other):
