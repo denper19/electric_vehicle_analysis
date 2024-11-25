@@ -79,6 +79,14 @@ eligibility = {
 }
 handler._plot = True
 handler.create_piechart(eligibility)
+yeartotal_barplot = {
+    'xlabel': 'Make',
+    'ylabel': 'No. of Vehicles',
+    'title' : 'yearly total',
+    'x': handler._df['Model Year'].unique()[:-10],
+    'y': handler._df['Model Year'].value_counts().to_list()[:-10]
+}
+handler.create_barplot(yeartotal_barplot)
 
 print("Years:",min(years),":",max(years))
 print("Geographical:")
