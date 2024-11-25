@@ -66,19 +66,33 @@ handler.create_barplot(model_data)
 
 car_type = {
     'title' : 'Vehicle type distribution',
-    'y': handler._df['Electric Vehicle Type'].value_counts().head(10).index.to_list(),
-    'x': handler._df['Electric Vehicle Type'].value_counts().head(10).to_list()
+    'y': handler._df['Electric Vehicle Type'].value_counts().index.to_list(),
+    'x': handler._df['Electric Vehicle Type'].value_counts().to_list()
 }
 handler._plot = True
-handler.create_piechart(car_type)
-
+handler.create_piechart(car_type, patch_artist=True)
+handler.create_barplot({
+    'xlabel': 'Vehicle type',
+    'ylabel': 'count',
+    'title' : 'Vehicle type distribution',
+    'y': handler._df['Electric Vehicle Type'].value_counts().to_list(),
+    'x': handler._df['Electric Vehicle Type'].value_counts().index.to_list()
+}, patch_artist=True)
 eligibility = {
     'title' : 'Clean Alternative Fuel Vehicle (CAFV) Eligibility',
-    'y': handler._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'].value_counts().head(10).index.to_list(),
-    'x': handler._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'].value_counts().head(10).to_list()
+    'y': handler._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'].value_counts().index.to_list(),
+    'x': handler._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'].value_counts().to_list()
 }
 handler._plot = True
-handler.create_piechart(eligibility)
+handler.create_piechart(eligibility, patch_artist=True)
+handler.create_barplot({
+    'xlabel': 'Eligible',
+    'ylabel': 'Count',
+    'title' : 'Clean Alternative Fuel Vehicle (CAFV) Eligibility',
+    'y': handler._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'].value_counts().to_list(),
+    'x': handler._df['Clean Alternative Fuel Vehicle (CAFV) Eligibility'].value_counts().index.to_list()
+}, patch_artist=True)
+
 yeartotal_barplot = {
     'xlabel': 'Make',
     'ylabel': 'No. of Vehicles',

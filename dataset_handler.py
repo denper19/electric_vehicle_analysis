@@ -72,33 +72,38 @@ class DatasetHandler:
 
         return ax
 
-    def create_boxplot(self, data={}, **other):
+    def create_boxplot(self, data={}, patch_artist=False):
         """
         Creates a boxplot
         """
         ax = self.create_graph(data)
-        cmap = plt.get_cmap('hsv')
-        bxplot=ax.boxplot(data["x"], labels=data["y"], **other)
-        colors = [cmap(x/len(bxplot['boxes']))for x in range(0,len(bxplot['boxes']))]
-        for patch, color in zip(bxplot['boxes'], colors):
-            patch.set_facecolor(color)
+        bxplot=ax.boxplot(data["x"], labels=data["y"], patch_artist=patch_artist)
+        if(patch_artist):
+            cmap = plt.get_cmap('hsv')
+            colors = [cmap(x/len(bxplot['boxes']))for x in range(0,len(bxplot['boxes']))]
+            for patch, color in zip(bxplot['boxes'], colors):
+                patch.set_facecolor(color)
         ax.tick_params(axis='x', rotation=90)
         
         if self._plot: plt.show()
 
-    def create_barplot(self, data={}, rotate=True, **other):
+    def create_barplot(self, data={}, rotate=True, patch_artist=False):
         """
         Creates a barplot
         """
         ax = self.create_graph(data)
 
-        ax.bar(data['x'], data['y'], **other)
-
+        if(patch_artist):
+            cmap = plt.get_cmap('tab20')
+            colors = [cmap(x/len(data['x']))for x in range(0,len(data['x']))]
+            ax.bar(data['x'], data['y'], color=colors)
+        else:
+            ax.bar(data['x'], data['y'])
         if rotate: ax.tick_params(axis='x', rotation=90)
         
         if self._plot: plt.show()
 
-    def create_piechart(self, data={}, **other):
+    def create_piechart(self, data={}, patch_artist=False):
         """
         Creates a piechart
         """
@@ -106,8 +111,12 @@ class DatasetHandler:
 
         ax.set_xlabel('')
         ax.set_ylabel('')
-        ax.pie(data['x'], labels=data['y'], autopct='%1.1f%%', **other)
-        
+        if(patch_artist):
+            cmap = plt.get_cmap('tab20')
+            colors = [cmap(x/len(data['x']))for x in range(0,len(data['x']))]
+            ax.pie(data['x'], labels=data['y'], autopct='%1.1f%%', colors=colors)
+        else:
+            ax.pie(data['x'], labels=data['y'], autopct='%1.1f%%')
         if self._plot: plt.show()
 
     def create_map(self, data={}, **other):
