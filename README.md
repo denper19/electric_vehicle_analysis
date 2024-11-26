@@ -4,4 +4,4 @@ https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2/ab
 
 The dataset_handler.py contains the dataset_handler class that is used to handle the data set, this includes plot generation, and cleaning the data.
 The project.py file utilizes the dataset_handler to generate diagrams and gain insight from the data.
-These are all added to the Jupiter notebook file named visual.ipynb.
+The Jupiter notebook file named visual.ipynb is just the reorganized version of project.py.
