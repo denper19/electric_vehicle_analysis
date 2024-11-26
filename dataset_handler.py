@@ -18,12 +18,13 @@ class DatasetHandler:
         except FileNotFoundError:
             print("The file could not be found!")
 
-    def clean_dataset(self):
+    def clean_dataset(self,printing=False):
         """
         Cleans the dataset i.e removes NaNs, errors, etc... and makes the dataset simpler to use.
         """
         # if we run the following, we see that Legislative District has the most number of NaN values
-        print(self._df.isna().sum().to_frame('NaN'))
+        if(printing):
+            print(self._df.isna().sum().to_frame('NaN'))
         # we can fix this as follows:
         self._df['Legislative District'] = self._df['Legislative District'].map(lambda x: str(x).split('.')[0])
         # in a similar way for Vehicle Location
