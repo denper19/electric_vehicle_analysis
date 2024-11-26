@@ -7,7 +7,7 @@ from folium.plugins import MarkerCluster
 import json
 
 handler = DatasetHandler(r"C:\Users\denve\ece143proj\Electric_Vehicle_Population_Data.csv")
-handler.clean_dataset()
+handler.clean_dataset(printing=True)
 handler._plot = False
 
 years=sorted(handler._df['Model Year'].unique())
