@@ -35,7 +35,7 @@ BEV=handler._df[handler._df['Electric Vehicle Type']=='BEV']
 boxplot_data_BEV = {
     'xlabel': 'Make',
     'ylabel': 'Electric Range',
-    'title' : 'EElectric Range by Manufacturer for BEV',
+    'title' : 'Electric Range by Manufacturer for BEV',
     'x': [BEV[BEV['Make'] == make]['Electric Range'] for make in BEV['Make'].unique()],
     'y': BEV['Make'].unique()
 }
@@ -94,11 +94,11 @@ handler.create_barplot({
 }, patch_artist=True)
 
 yeartotal_barplot = {
-    'xlabel': 'Make',
+    'xlabel': 'Year',
     'ylabel': 'No. of Vehicles',
-    'title' : 'yearly total',
-    'x': handler._df['Model Year'].unique()[:-10],
-    'y': handler._df['Model Year'].value_counts().to_list()[:-10]
+    'title' : 'Yearly Total',
+    'x': handler._df['Model Year'].value_counts().index.to_list(),
+    'y': handler._df['Model Year'].value_counts().to_list()
 }
 handler.create_barplot(yeartotal_barplot)
 
