@@ -3,3 +3,6 @@ pandas
 numpy
 sklearn
 folium
+geopy
+json
+seaborn
