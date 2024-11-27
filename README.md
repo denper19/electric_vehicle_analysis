@@ -8,6 +8,6 @@ The project.py file utilizes the dataset_handler to generate diagrams and gain i
 
 The Jupiter notebook file named visual.ipynb is just the reorganized version of project.py.
 
-The Jupiter notebook file named map_vis.ipynb is the map of
+The Jupiter notebook file named map_vis.ipynb is the map of EV distribution in Washington (including the cars that left Washington as well). 
 
 The Jupiter notebook file named map_vis2.ipynb is the map of the electric vehicles by type.
