@@ -11,3 +11,6 @@ The Jupiter notebook file named visual.ipynb is just the reorganized version of 
 The Jupiter notebook file named map_vis.ipynb is the map of EV distribution in Washington (including the cars that left Washington as well). 
 
 The Jupiter notebook file named map_vis2.ipynb is the map of the electric vehicles by type.
+
+The Jupiter notebook file named clustering.ipynb focus on the Washington state and shows the visualization about company adress selection based on clustering and distribution of vehicle types around each clustering centers.
+
