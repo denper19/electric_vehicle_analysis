@@ -155,5 +155,19 @@ handler._df.describe(exclude='number').T
 
 # map_usa
 
+# EV_map_usa = folium.Map(location=[39.5, -99.7], tiles='cartodbpositron', zoom_start=4.4)
+
+# for loc in handler._df[handler._df['Electric Vehicle Type']=='BEV']['Postal Code'].dropna().unique():
+#     key = str(int(loc))
+#     lat, lon = loaded_data[key]['latitude'], loaded_data[key]['longitude']
+#     folium.CircleMarker(location=[lat, lon], radius=5, fill=True, fill_color="red", fill_opacity=1, stroke=False).add_to(EV_map_usa)
+
+# for loc in handler._df[handler._df['Electric Vehicle Type']=='PHEV']['Postal Code'].dropna().unique():
+#     key = str(int(loc))
+#     lat, lon = loaded_data[key]['latitude'], loaded_data[key]['longitude']
+#     folium.CircleMarker(location=[lat, lon], radius=5, fill=True, fill_color="green", fill_opacity=1, stroke=False).add_to(EV_map_usa)
+
+# EV_map_usa
+
 ##########################################################################
 
