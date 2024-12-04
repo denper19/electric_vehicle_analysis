@@ -1,4 +1,4 @@
-from dataset_handler import DatasetHandler
+from electric_vehicle_analysis.src.dataset_handler import DatasetHandler
 import matplotlib.pyplot as plt
 from geopy.geocoders import Nominatim
 import folium
