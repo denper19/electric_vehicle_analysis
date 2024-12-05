@@ -119,9 +119,3 @@ class DatasetHandler:
         else:
             ax.pie(data['x'], labels=data['y'], autopct='%1.1f%%')
         if self._plot: plt.show()
-
-    def create_map(self, data={}, **other):
-        """
-        Creates a map of car locations in the world
-        """
-        pass
