@@ -10,5 +10,11 @@ The Jupiter notebook file named visual2.ipynb is the map of EV distribution in W
 
 The Jupiter notebook file named visual3.ipynb is the map of the electric vehicles by type.
 
+visual.py = visual1.ipynb + visual2.ipynb + visual3.ipynb. Caveat: map visualisations only works in notebook
+
+vehicle_clustering.py = clustering.ipynb
+
+## It is recommended to use the notebooks.
+
 The Jupiter notebook file named clustering.ipynb focus on the Washington state and shows the visualization about company adress selection based on clustering and distribution of vehicle types around each clustering centers.
 

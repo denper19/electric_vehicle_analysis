@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from collections import Counter
 
 # Read the data
-df = pd.read_csv("C:/Users/lyf86/Desktop/vehicle_project/Electric_Vehicle_Population_Data.csv")
+df = pd.read_csv("Electric_Vehicle_Population_Data.csv")
 
 # Extract longitude
 def extract_longitude(location):
